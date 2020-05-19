@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view class="my_index">
+  <!-- 搜索框 start -->
+  <SearchInput></SearchInput>
+  <!-- 搜索框 end -->
+  <view class="iconfont icon-gouwuche">首页</view>
+</view>
+
