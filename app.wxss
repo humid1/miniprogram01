@@ -20,3 +20,7 @@ page,view,text.swiper,swiper-item,image,navigator {
    */
     font-size: 28rpx;
  }
+
+ image {
+   width: 100%;
+ }
