@@ -13,7 +13,9 @@ Page({
     // 右侧菜单栏数据
     rightMenuList: [],
     // 被点击的左侧菜单
-    currentIndex: 0
+    currentIndex: 0,
+    // 右侧内容的滚动条距离顶部的距离
+    scrollTop: 0
   },
   // 接口返回数据（用于筛选数据）
   Cates: [],
@@ -42,8 +44,8 @@ Page({
       // 不存在后台获取数据
       this.getCates();
     } else {
-      // 存在本地存储数据，定义过期时间 10s
-      if(Date.now() - Cates.time > 1000 * 10) {
+      // 存在本地存储数据，定义过期时间 一天
+      if(Date.now() - Cates.time > 1000 * 60 * 60 * 24) {
         // 重新查询后台数据消息
         this.getCates()
       } else {
@@ -63,7 +65,7 @@ Page({
   // 获取分类数据
   getCates() {
     request({
-      url: "https://api-hmugo-web.itheima.net/api/public/v1/categories"
+      url: "/categories"
     }).then( result => {
       // console.log(result);
       if(result.data.meta.status === 200) {
@@ -93,8 +95,11 @@ Page({
     let rightMenuList = this.Cates[index].children;
     this.setData({
       currentIndex: index,
-      rightMenuList
+      rightMenuList,
+      // 重新设置 右侧内容的scroll-view 标签的距离顶部的距离
+      scrollTop: 0
     })
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
