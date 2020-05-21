@@ -1,5 +1,6 @@
 // 导入用来发送请求的 封装代码，要把代码补全
 import { request } from "../../request/index.js";
+import regeneratorRuntime from '../../lib/runtime/runtime';
 
 // pages/category/category.js
 Page({
@@ -63,25 +64,39 @@ Page({
     }
   },
   // 获取分类数据
-  getCates() {
-    request({
-      url: "/categories"
-    }).then( result => {
-      // console.log(result);
-      if(result.data.meta.status === 200) {
-        // 把数据存入到本地存储中
-        wx.setStorageSync('cates', { time: Date.now(), data: result.data.message})
-        this.Cates = result.data.message;
-        // 构造左侧的大菜单数据
-        let leftMenuList = this.Cates.map( v => v.cat_name)
-        // 构造右侧的商品数据
-        let rightMenuList = this.Cates[0].children
-        this.setData({
-          leftMenuList,
-          rightMenuList
-        })
-      }
-    })
+  async getCates() {
+    // request({
+    //   url: "/categories"
+    // }).then( result => {
+    //   // console.log(result);
+    //   if(result.data.meta.status === 200) {
+    //     // 把数据存入到本地存储中
+    //     wx.setStorageSync('cates', { time: Date.now(), data: result.data.message})
+    //     this.Cates = result.data.message;
+    //     // 构造左侧的大菜单数据
+    //     let leftMenuList = this.Cates.map( v => v.cat_name)
+    //     // 构造右侧的商品数据
+    //     let rightMenuList = this.Cates[0].children
+    //     this.setData({
+    //       leftMenuList,
+    //       rightMenuList
+    //     })
+    //   }
+    // })
+    const { data: res } =  await request({ url: "/categories" });
+    if(res.meta.status === 200) {
+      // 把数据存入到本地存储中
+      wx.setStorageSync('cates', { time: Date.now(), data: res.message})
+      this.Cates = res.message;
+      // 构造左侧的大菜单数据
+      let leftMenuList = this.Cates.map( v => v.cat_name)
+      // 构造右侧的商品数据
+      let rightMenuList = this.Cates[0].children
+      this.setData({
+        leftMenuList,
+        rightMenuList
+      })
+    }
   },
   // 左侧菜单的点击事件
   handleItemTap(e) {

@@ -32,7 +32,7 @@ Page({
     // });
 
     request({
-      url: "https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata"
+      url: "/home/swiperdata"
     }).then( result => {
       // console.log(result);
       if(result.data.meta.status === 200) {
