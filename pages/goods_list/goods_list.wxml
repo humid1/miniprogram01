@@ -8,7 +8,8 @@
       <view class="first_tab">
         <navigator class="goods_item"
           wx:for="{{goodsList}}"
-          wx:key="goods_id">
+          wx:key="goods_id"
+          url="/pages/goods_detail/goods_detail?goods_id={{item.goods_id}}">
           <!-- 左侧 图片容器 -->
           <view class="goods_img_wrap">
             <image src="{{item.goods_small_logo ? item.goods_small_logo : 'https://ww1.sinaimg.cn/images/default_s_large.gif#103'}}" mode="widthFix" ></image>
