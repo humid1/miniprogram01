@@ -43,3 +43,36 @@ export const openSetting = () => {
     })
   })
 }
+/**
+ * 显示弹框方法的封装
+ *  Promise 形式的 showModal
+ */
+export const showModal = (content) => {
+  return new Promise( (resolve, reject) => {
+    wx.showModal({
+      title: '提示',
+      content,
+      success: (res) => {
+        resolve(res);
+      },
+      fail: (err) => {
+        reject(err);
+      }
+    })
+  }) 
+}
+/**
+ * Promist 形式 showToast
+ */
+export const showToast = ({title}) => {
+  return new Promise( (resolve, reject) => {
+    wx.showToast({
+      title,
+      icon: 'none',
+      success: (result)=>{
+        resolve(result)
+      },
+      fail: (err) => { reject(err) }
+    });
+  })
+}

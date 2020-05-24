@@ -26,6 +26,28 @@ page {
   border-bottom: 1px solid currentColor;
   font-weight: bold;
 }
+.cart_content .cart_main .no_goods {
+  height: 400rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cart_content .cart_main .no_goods .icon-gouwuche {
+  width: 150rpx;
+  height: 150rpx;
+  font-size: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #eee;
+}
+.cart_content .cart_main .no_goods .no_goods_text {
+  margin-top: 10rpx;
+  font-size: 32rpx;
+  color: #666666;
+}
 .cart_content .cart_main .cart_item {
   display: flex;
   padding: 10rpx;
@@ -97,6 +119,7 @@ page {
   height: 90rpx;
   overflow: hidden;
   background-color: #ffffff;
+  border-top: 1px solid #ccc;
   display: flex;
 }
 .footer_tool .all_chk_wrap {
