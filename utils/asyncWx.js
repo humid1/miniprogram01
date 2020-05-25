@@ -92,3 +92,20 @@ export const login = () => {
     })
   })
 }
+
+/**
+ * Promise 封装 调起小程序的 微信支付
+ */
+export const requestPayment = (pay) => {
+  return new Promise((resolve, reject) => {
+    wx.requestPayment({
+      ...pay,
+      success: (result) => {
+        resolve(result);
+      },
+      fail: (err) => {
+        reject(err);
+      }
+    });
+  })
+}

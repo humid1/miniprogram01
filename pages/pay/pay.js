@@ -10,10 +10,15 @@
  * 3.支付按钮
  *    先判断缓存中有没有token
  *      没有 跳转到授权页面，进行获取 token
- *      有        
+ *      有token，创建订单，获取订单编号
+ *    完成微信支付
+ *    手动删除缓存中，已经被选中了的商品
+ *    删除后的购物车数据，重新覆盖原来的缓存数据
+ *    跳转到订单页面       
  *    
  */
-import { getSetting,openSetting,chooseAddress,showModal,showToast } from '../../utils/asyncWx';
+import request from '../../request/index'
+import { getSetting,openSetting,chooseAddress,showModal,showToast,requestPayment } from '../../utils/asyncWx';
 import regeneratorRuntime from '../../lib/runtime/runtime';
 // pages/cart/cart.js
 Page({
@@ -63,16 +68,71 @@ Page({
   },
   // 点击支付按钮的功能
   async handleOrderPay() {
-    // 1.判断缓存中有没有 token
-    const token = wx.getStorageSync('token');
-    // 2.判断是否存在
-    if(!token) {
+    try {
+      // 1.判断缓存中有没有 token
+      const token = wx.getStorageSync('token');
+      
+      // 2.判断是否存在
+      if(!token) {
+        wx.navigateTo({
+          url: '/pages/auth/auth'
+        });
+        return;
+      } else {
+        // 存在 token
+        console.log("存在token");
+      }
+      // 3.创建订单
+      //  3.1 准备请求头参数
+      // const header = {Authorization: token};
+
+      //  3.2 准备请求体参数
+      const order_price = this.data.totalPrice;
+      const consignee_addr = this.data.address.all;
+      const cart = this.data.cart;
+      let goods = [];
+      cart.forEach( v => goods.push({
+        goods_id: v.goods_id,
+        goods_number: v.num,
+        goods_price: v.goods_price 
+      }))
+      const dataParams = {order_price,consignee_addr,goods}
+      // 4.发送请求，创建订单，获取订单编号
+      const {data: res} = await request({ 
+        url: '/my/orders/create',
+        method: 'post',
+        data: dataParams
+      })
+      // 获取订单编号
+      const {order_number} = res.data;
+      // 5.发起 预支付接口
+      const {data: res} = await request({
+        url: '/my/orders/req_unifiedorder',
+        method: 'post',
+        data: {order_number}
+      })
+      // 后台返回的值包含 timeStamp nonceStr timeStamp package signType
+      // 6.发起微信支付
+      await requestPayment(res.pay)
+      // 7.查询后台 订单状态
+      await request({
+        url: '/my/orders/chkOrder',
+        method: 'post',
+        data: {order_number}
+      })
+      await showToast({title: '支付成功！'});
+      // 8.删除缓存中，已经支付的商品
+      let newCart = wx.getStorageSync('cart');
+      newCart = newCart.filter( v => !v.checked);
+      wx.getStorageSync('cart', newCart);
+
+      // 9.支付成功，跳转到订单页面
       wx.navigateTo({
-        url: '/pages/auth/auth'
-      });
-      return;
-    } else {
-      // 存在 token
+        url: '/pages/order/order'
+      })
+    } catch(err) {
+      await showToast({title: '支付失败！' + err});
     }
   }
 })
+  

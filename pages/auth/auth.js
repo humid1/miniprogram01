@@ -5,13 +5,15 @@ import { request } from '../../request/index'
 Page({
   // 获取用信息
   async handleGetUserInfo(e) {
-    // console.log(e);
+    console.log(e);
     // e.detail内的参数
     // cloudID  encryptedData errMsg iv rawData signature userInfo
     // 1.获取用户信息
     const {encryptedData,rawData,iv,signature} = e.detail;
     // 2.获取小程序登录成功后的 code
     const {code} = await login();
+    console.log(code);
+    
     const loginParams = {encryptedData, rawData, iv, signature, code}
     // 3.发送请求，获取用户的token
     const { data: res } = await request({
