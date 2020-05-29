@@ -7,6 +7,14 @@
  *  先判断，当前商品是否已经存在购物车
  *    存在，修改商品数据，执行购物车商品数量 ++，重新把购物车数据，填充到缓存中
  *    不存在购物车，直接给购物车添加一个新元素
+ * 4.商品收藏功能
+ *    页面 onShow的时候加载，缓存中的数据
+ *    判断当前页面商品是不是被收藏
+ *        是，改变页面的图标
+ *        否，
+ *    点击商品收藏按钮，判断该商品是否存在于缓存数组中
+ *        已经存在，把商品删除
+ *        没有存在，把商品添加到收藏数组中，存入缓存中即可
  */
 import { request } from "../../request/index";
 
@@ -17,7 +25,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    goodsObj: {}
+    goodsObj: {},
+    // 商品是否被收藏
+    isCollect: false
   },
   // 构造商品对象
   GoodInfo: {},
@@ -28,11 +38,28 @@ Page({
     const {goods_id} = options;
     this.getGoodsDetail(goods_id);
   },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    let pages =  getCurrentPages();
+    let currentPage = pages[pages.length - 1];
+    let {goods_id} = currentPage.options;
+    // console.log(goods_id);
+    this.getGoodsDetail(goods_id);
+  },
   // 获取商品详情数据
   getGoodsDetail(goods_id) {
     request({ url:"/goods/detail", data: {goods_id} }).then( res => {
       const goodsObj = res.data.message;
       this.GoodInfo = res.data.message;
+      // 1.获取缓存中的商品收藏数组
+      let collect = wx.getStorageSync("collect") || [];
+      // 2.判断当前商品是否被收藏
+      console.log(collect, goods_id);
+      let isCollect = collect.some( v=> v.goods_id === this.GoodInfo.goods_id );
+      console.log(isCollect);
+      
       this.setData({
         goodsObj: {
           goods_name: goodsObj.goods_name,
@@ -43,7 +70,8 @@ Page({
           goods_introduce: goodsObj.goods_introduce.replace(/\.webp/g,'.jpg'),
           pics: goodsObj.pics,
           attrs: goodsObj.attrs
-        }
+        },
+        isCollect
       })
     })
   },
@@ -83,20 +111,35 @@ Page({
       mask: true
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  // 点击收藏按钮触发的事件
+  handleCollect() {
+    // let isCollect = false;
+    // 1.获取缓存中的商品收藏数组
+    let collect = wx.getStorageSync('collect') || [];
+    // 2.判断该商品是否被收藏过
+    let index = collect.findIndex( v => v.goods_id === this.GoodInfo.goods_id);
+    // 3.当index !== -1 表示已经收藏过
+    let title = "收藏成功";
+    if(index !== -1) {
+      // 表示已经收藏过,需要移除
+      collect.splice(index, 1);
+      title = "取消收藏";
+    } else {
+      // 没有收藏过，添加到缓存中
+      collect.push(this.GoodInfo);
+    }
+    wx.showToast({
+      title,
+      icon: 'success',
+      mask: true
+    })
+    // 4.把数组存入缓存中
+    wx.setStorageSync('collect', collect);
+    // 5.修改 data 中的属性
+    this.setData({
+      isCollect: !this.data.isCollect
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

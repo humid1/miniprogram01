@@ -1,0 +1,128 @@
+page {
+    background-color: #edece8;
+}
+
+.user_info_wrap {
+    height: 45vh;
+    background-color: var(--themeColor);
+    overflow: hidden;
+    position: relative;
+    .user_img_wrap {
+        position: relative;
+        .user_bg {
+            height: 46vh;
+            // 高斯模糊
+            -webkit-filter: blur(10px); /* Chrome, Safari, Opera */
+            filter: blur(10px);
+        }
+        .user_info {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            
+            transform: translateX(-50%);
+            text-align: center;
+            .user_icon {
+                height: 150rpx;
+                width: 150rpx;
+                border-radius: 50%;
+            }
+            .user_name {
+                color: #fff;
+                margin-top: 40rpx;
+                font-size: 40rpx;
+            }
+        }
+    }
+    .user_btn {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 40%;
+        width: 150rpx;
+        font-weight: 600;
+        height: 50rpx;
+        font-size: 32rpx;
+        text-align: center;
+        color: #fff;
+        border-radius: 10rpx;
+        background-image: linear-gradient(270deg,#f2270c,#ff4b2b);
+        box-shadow: 0 3rpx 6rpx 0 rgba(255,65,66,.2);
+        border-radius: 25rpx;
+    }
+}
+
+.user_content {
+    position: relative;
+    .user_main {
+        color: #666;
+        padding-bottom: 100rpx;
+        position: absolute;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -40rpx;
+        
+        .history_wrap {
+            background-color: #fff;
+            display: flex;
+            navigator {
+                flex: 1;
+                text-align: center;
+                padding: 10rpx 0;
+                .his_num {
+                    color: var(--themeColor);
+                }
+                .his_name {
+    
+                }
+            }
+        }
+        .orders_wrap {
+            margin-top: 20rpx;
+            background-color: #fff;
+            .orders_title {
+                padding: 15rpx;
+                border-bottom: 1rpx solid #ccc;
+            }
+            .orders_content {
+                padding: 20rpx 0;
+                display: flex;
+                text-align: center;
+                navigator {
+                    flex: 1;
+                    .iconfont {
+                        color: var(--themeColor);
+                        font-size: 40rpx;
+                    }
+                    .order_name {
+
+                    }
+                }
+            
+            }
+        }
+        .address_wrap {
+            margin-top: 20rpx;
+            background-color: #fff;
+            padding: 20rpx;
+        }
+        .app_info_wrap {
+            margin-top: 20rpx;
+            background-color: #fff;
+            .app_info_item {
+                padding: 20rpx;
+                border-bottom: 1rpx solid #ccc;
+            }
+            .app_info_contact {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .recommend_wrap {
+            margin-top: 20rpx;
+            background-color: #fff;
+            padding: 20rpx;
+        }
+    }
+}

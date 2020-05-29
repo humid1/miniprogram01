@@ -1,7 +1,6 @@
 
 // 同时发送异步代码的次数
 let ajaxTime = 0;
-
 export const request = (params) => {
   // 判断 url 中是否带有 /my/ 请求的是私有路径，带上 header token
   let header = {...params.header};

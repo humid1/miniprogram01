@@ -5,6 +5,10 @@ import { request } from '../../request/index'
 Page({
   // 获取用信息
   async handleGetUserInfo(e) {
+    // 模拟操作-直接设置 token
+    wx.setStorageSync('token', "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnPo");
+    return;
+
     console.log(e);
     // e.detail内的参数
     // cloudID  encryptedData errMsg iv rawData signature userInfo

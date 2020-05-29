@@ -2,6 +2,8 @@
 Page({
   // 获取用户信息
   handleGetUserInfo(e) {
-    console.log(e);
+    const {userInfo} = e.detail;
+    // 存入到缓存数据中
+    wx.setStorageSync("userinfo", userInfo);
   }
 })

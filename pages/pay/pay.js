@@ -106,14 +106,14 @@ Page({
       // 获取订单编号
       const {order_number} = res.data;
       // 5.发起 预支付接口
-      const {data: res} = await request({
+      const {data: res2} = await request({
         url: '/my/orders/req_unifiedorder',
         method: 'post',
         data: {order_number}
       })
       // 后台返回的值包含 timeStamp nonceStr timeStamp package signType
       // 6.发起微信支付
-      await requestPayment(res.pay)
+      await requestPayment(res2.pay)
       // 7.查询后台 订单状态
       await request({
         url: '/my/orders/chkOrder',
