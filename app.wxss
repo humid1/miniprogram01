@@ -24,3 +24,4 @@ page,view,text.swiper,swiper-item,image,navigator {
  image {
    width: 100%;
  }
+ 
