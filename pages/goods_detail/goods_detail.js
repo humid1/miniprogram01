@@ -36,7 +36,7 @@ Page({
    */
   onLoad: function (options) {
     const {goods_id} = options;
-    this.getGoodsDetail(goods_id);
+    // this.getGoodsDetail(goods_id);
   },
   /**
    * 生命周期函数--监听页面显示
@@ -56,9 +56,7 @@ Page({
       // 1.获取缓存中的商品收藏数组
       let collect = wx.getStorageSync("collect") || [];
       // 2.判断当前商品是否被收藏
-      console.log(collect, goods_id);
       let isCollect = collect.some( v=> v.goods_id === this.GoodInfo.goods_id );
-      console.log(isCollect);
       
       this.setData({
         goodsObj: {
