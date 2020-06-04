@@ -17,7 +17,7 @@
      -->
     <swiper autoplay circular indicator-dots indicator-color="rgba(255, 255, 255, .5)" indicator-active-color>
       <swiper-item wx:for="{{ swiperList }}" wx:key="goods_id">
-        <navigator url="{{ item.navigator_url }}" open-type="navigate">
+        <navigator url="/pages/goods_detail/goods_detail?goods_id={{ item.goods_id }}" open-type="navigate">
           <image src="{{ item.image_src }}" mode="widthFix"></image>
         </navigator>
       </swiper-item>
@@ -26,7 +26,7 @@
   <!-- end -->
   <!-- 导航栏 start -->
   <view class="index_cate">
-    <navigator wx:for="{{ cateList }}" wx:key="index" url="{{ item.navigator_url }}">
+    <navigator url="{{index === 0 ? '/pages/category/category' : ''}}" wx:for="{{ cateList }}" wx:key="index" url="{{ item.navigator_url }}">
       <image mode="widthFix" src="{{item.image_src}}"></image>
     </navigator>
   </view>

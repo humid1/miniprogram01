@@ -1,0 +1,16 @@
+.up_img_wrap {
+  width: 90rpx;
+  height: 90rpx;
+  /* background-color: darkblue; */
+  position: relative;
+}
+.up_img_wrap .up_img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+.up_img_wrap .icon_del {
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+}
