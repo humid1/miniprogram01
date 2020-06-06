@@ -13,10 +13,11 @@ page {
   padding-left: 30rpx;
 }
 .search_row button {
-  width: 110rpx;
+  width: 100rpx;
   height: 100%;
   font-size: 24rpx;
   padding: 0;
+  color: #666;
   margin-left: 10rpx;
   display: flex;
   justify-content: center;
