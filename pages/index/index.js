@@ -62,8 +62,15 @@ Page({
     }).then( result => {
       // console.log(result);
       if(result.data.meta.status === 200) {
+        // 格式化跳转 url 地址
+        const floorList = result.data.message;
+        floorList.forEach( v => {
+          v.product_list.forEach( v2 => {
+            v2.navigator_url = '/pages/goods_list/goods_list' + v2.navigator_url.substring(v2.navigator_url.lastIndexOf('?'));
+          })
+        })        
         this.setData({
-          floorList: result.data.message
+          floorList
         })
       }
     })
